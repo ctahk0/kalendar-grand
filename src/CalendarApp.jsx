@@ -8,9 +8,15 @@ export default function CalendarApp() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginData, setLoginData] = useState({ username: "", password: "" });
+  const validLogins = [
+    { username: import.meta.env.VITE_USER_1, password: import.meta.env.VITE_PASS_1 },
+    { username: import.meta.env.VITE_USER_2, password: import.meta.env.VITE_PASS_2 },
+  ];
+
 
   useEffect(() => {
-    const sheetId = "1X34KlrQ0rGHINXkQ2LrUBBj4Fgnkq9Ryb5kLrewbrI0";
+    const sheetUrl = import.meta.env.VITE_SHEET_URL;
+    const sheetId = sheetUrl.split("/d/")[1].split("/")[0];
 
     const fetchAllFromUkupno = async () => {
       const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=Ukupno`;
@@ -53,6 +59,22 @@ export default function CalendarApp() {
     if (isLoggedIn) fetchAllFromUkupno();
   }, [isLoggedIn]);
 
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    const isValid = validLogins.some(
+      (u) =>
+        u.username === loginData.username &&
+        u.password === loginData.password
+    );
+
+    if (isValid) {
+      setIsLoggedIn(true);
+    } else {
+      alert("Pogrešno korisničko ime ili lozinka");
+    }
+  };
+
   const formatDate = (input) => {
     const [month, day, year] = input.split('/');
     if (!month || !day || !year) return null;
@@ -64,18 +86,6 @@ export default function CalendarApp() {
   };
 
   const closeModal = () => setSelectedEvent(null);
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    if (
-      loginData.username === "admin" &&
-      loginData.password === "lozinka123"
-    ) {
-      setIsLoggedIn(true);
-    } else {
-      alert("Pogrešno korisničko ime ili lozinka");
-    }
-  };
 
   if (!isLoggedIn) {
     return (
@@ -117,7 +127,7 @@ export default function CalendarApp() {
 
       <div className="mt-4 text-center">
         <a
-          href="https://docs.google.com/spreadsheets/d/1X34KlrQ0rGHINXkQ2LrUBBj4Fgnkq9Ryb5kLrewbrI0/edit"
+          href={import.meta.env.VITE_SHEET_EDITOR}
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 underline hover:text-blue-800"
