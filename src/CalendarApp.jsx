@@ -8,15 +8,25 @@ export default function CalendarApp() {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loginData, setLoginData] = useState({ username: "", password: "" });
+
   const validLogins = [
     { username: import.meta.env.VITE_USER_1, password: import.meta.env.VITE_PASS_1 },
     { username: import.meta.env.VITE_USER_2, password: import.meta.env.VITE_PASS_2 },
   ];
 
+  useEffect(() => {
+    const savedLogin = localStorage.getItem("loggedIn");
+    if (savedLogin === "true") {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   useEffect(() => {
+    if (!isLoggedIn) return;
+
     const sheetUrl = import.meta.env.VITE_SHEET_URL;
-    const sheetId = sheetUrl.split("/d/")[1].split("/")[0];
+    const sheetId = sheetUrl.split("/d/")[1]?.split("/")[0];
+    if (!sheetId) return;
 
     const fetchAllFromUkupno = async () => {
       const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=Ukupno`;
@@ -40,45 +50,46 @@ export default function CalendarApp() {
           allRows.push({
             title: `${klijent ? klijent + " - " : ""}${opis}`,
             date: formattedDate,
-            extendedProps: {
-              kontakt,
-              napomena,
-              klijent,
-              opis,
-            },
+            extendedProps: { kontakt, napomena, klijent, opis },
           });
         });
 
         setEvents(allRows);
-        console.log("Učitano događaja:", allRows.length);
+        console.log("✅ Učitano događaja:", allRows.length);
       } catch (e) {
-        console.error("Greška pri učitavanju 'Ukupno' taba:", e);
+        console.error("❌ Greška pri učitavanju 'Ukupno' taba:", e);
       }
     };
 
-    if (isLoggedIn) fetchAllFromUkupno();
+    fetchAllFromUkupno(); // odmah učitaj
+
+    const interval = setInterval(fetchAllFromUkupno, 60000); // svakih 60s
+    return () => clearInterval(interval); // očisti na unmount
   }, [isLoggedIn]);
+
+  const formatDate = (input) => {
+    const [month, day, year] = input.split('/');
+    if (!month || !day || !year) return null;
+    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+  };
 
   const handleLogin = (e) => {
     e.preventDefault();
-
     const isValid = validLogins.some(
-      (u) =>
-        u.username === loginData.username &&
-        u.password === loginData.password
+      (u) => u.username === loginData.username && u.password === loginData.password
     );
 
     if (isValid) {
       setIsLoggedIn(true);
+      localStorage.setItem("loggedIn", "true");
     } else {
       alert("Pogrešno korisničko ime ili lozinka");
     }
   };
 
-  const formatDate = (input) => {
-    const [month, day, year] = input.split('/');
-    if (!month || !day || !year) return null;
-    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`; // yyyy-mm-dd
+  const handleLogout = () => {
+    localStorage.removeItem("loggedIn");
+    setIsLoggedIn(false);
   };
 
   const handleEventClick = (info) => {
@@ -116,7 +127,11 @@ export default function CalendarApp() {
 
   return (
     <div className="p-4">
-      <h1 className="text-xl font-bold mb-4">📅 Kalendar događaja</h1>
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-xl font-bold">📅 Kalendar događaja</h1>
+        <button onClick={handleLogout} className="text-sm text-red-600 underline">Odjavi se</button>
+      </div>
+
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
@@ -125,17 +140,6 @@ export default function CalendarApp() {
         height="auto"
         firstDay={1}
       />
-
-      {/* <div className="mt-4 text-center">
-        <a
-          href={import.meta.env.VITE_SHEET_EDITOR}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-600 underline hover:text-blue-800"
-        >
-          👉 Otvori Google Sheet za uređivanje podataka
-        </a>
-      </div> */}
 
       {selectedEvent && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
