@@ -54,9 +54,9 @@ export default function CalendarApp() {
   }, [isLoggedIn]);
 
   const formatDate = (input) => {
-    const date = new Date(input);
-    if (isNaN(date.getTime())) return null;
-    return date.toISOString().split("T")[0];
+    const [month, day, year] = input.split('/');
+    if (!month || !day || !year) return null;
+    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`; // yyyy-mm-dd
   };
 
   const handleEventClick = (info) => {
@@ -114,6 +114,17 @@ export default function CalendarApp() {
         eventClick={handleEventClick}
         height="auto"
       />
+
+      <div className="mt-4 text-center">
+        <a
+          href="https://docs.google.com/spreadsheets/d/1X34KlrQ0rGHINXkQ2LrUBBj4Fgnkq9Ryb5kLrewbrI0/edit"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 underline hover:text-blue-800"
+        >
+          👉 Otvori Google Sheet za uređivanje podataka
+        </a>
+      </div>
 
       {selectedEvent && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
