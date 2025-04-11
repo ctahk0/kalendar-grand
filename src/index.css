@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.fc-day-sat,
+.fc-day-sun {
+    background-color: #eef2ff;
+}

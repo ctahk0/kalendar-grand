@@ -123,6 +123,7 @@ export default function CalendarApp() {
         events={events}
         eventClick={handleEventClick}
         height="auto"
+        firstDay={1}
       />
 
       {/* <div className="mt-4 text-center">
