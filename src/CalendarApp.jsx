@@ -125,7 +125,7 @@ export default function CalendarApp() {
         height="auto"
       />
 
-      <div className="mt-4 text-center">
+      {/* <div className="mt-4 text-center">
         <a
           href={import.meta.env.VITE_SHEET_EDITOR}
           target="_blank"
@@ -134,7 +134,7 @@ export default function CalendarApp() {
         >
           👉 Otvori Google Sheet za uređivanje podataka
         </a>
-      </div>
+      </div> */}
 
       {selectedEvent && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
