@@ -80,7 +80,7 @@ export default function CalendarApp() {
               start: formattedDate,
               end: formattedDate,
               display: "background",
-              backgroundColor: "#ef4444", // svijetlocrvena
+              backgroundColor: "#ff4d4f", // svijetlocrvena
             });
           }
         });
