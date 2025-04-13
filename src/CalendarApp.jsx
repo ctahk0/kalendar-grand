@@ -43,14 +43,23 @@ export default function CalendarApp() {
           const opis = row.c[2]?.v || "";
           const kontakt = row.c[3]?.v || "";
           const napomena = row.c[4]?.v || "";
+          const potvrda = row.c[5]?.v || "";
 
           const formattedDate = formatDate(datum);
           if (!formattedDate || !opis) return;
+          const isPotvrda = potvrda?.toLowerCase?.() === "da";
 
           allRows.push({
             title: `${klijent ? klijent + " - " : ""}${opis}`,
             date: formattedDate,
-            extendedProps: { kontakt, napomena, klijent, opis },
+            backgroundColor: isPotvrda ? "#fecaca" : undefined, // crvenkasta ako je potvrđeno
+            extendedProps: {
+              kontakt,
+              napomena,
+              klijent,
+              opis,
+              potvrda,
+            },
           });
         });
 
@@ -156,6 +165,7 @@ export default function CalendarApp() {
             <p><strong>Opis:</strong> {selectedEvent.opis}</p>
             <p><strong>Kontakt:</strong> {selectedEvent.kontakt}</p>
             <p><strong>Napomena:</strong> {selectedEvent.napomena}</p>
+            <p><strong>Potvrđeno:</strong> {selectedEvent.potvrda}</p>
           </div>
         </div>
       )}
