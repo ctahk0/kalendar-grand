@@ -44,7 +44,7 @@ export default function CalendarApp() {
           const kontakt = row.c[3]?.v || "";
           const napomena = row.c[4]?.v || "";
           const potvrda = row.c[5]?.v || "";
-
+        
           const formattedDate = formatDate(datum);
           if (
             !formattedDate ||
@@ -58,13 +58,13 @@ export default function CalendarApp() {
           ) {
             return;
           }
-          
+        
           const isPotvrda = potvrda?.toLowerCase?.() === "da";
-
+        
+          // Glavni event
           allRows.push({
             title: `${klijent ? klijent + " - " : ""}${opis}`,
             date: formattedDate,
-            backgroundColor: isPotvrda ? "#fecaca" : undefined, // crvenkasta ako je potvrđeno
             extendedProps: {
               kontakt,
               napomena,
@@ -73,7 +73,18 @@ export default function CalendarApp() {
               potvrda,
             },
           });
+        
+          // Ako je potvrđeno — dodatni background event
+          if (isPotvrda) {
+            allRows.push({
+              start: formattedDate,
+              end: formattedDate,
+              display: "background",
+              backgroundColor: "#fecaca", // svijetlocrvena
+            });
+          }
         });
+        
 
         setEvents(allRows);
         console.log("✅ Učitano događaja:", allRows.length);
