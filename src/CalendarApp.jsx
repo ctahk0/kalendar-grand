@@ -44,7 +44,7 @@ export default function CalendarApp() {
           const kontakt = row.c[3]?.v || "";
           const napomena = row.c[4]?.v || "";
           const potvrda = row.c[5]?.v || "";
-        
+
           const formattedDate = formatDate(datum);
           if (
             !formattedDate ||
@@ -58,9 +58,9 @@ export default function CalendarApp() {
           ) {
             return;
           }
-        
+
           const isPotvrda = potvrda?.toLowerCase?.() === "da";
-        
+
           // Glavni event
           allRows.push({
             title: `${klijent ? klijent + " - " : ""}${opis}`,
@@ -73,7 +73,7 @@ export default function CalendarApp() {
               potvrda,
             },
           });
-        
+
           // Ako je potvrđeno — dodatni background event
           if (isPotvrda) {
             allRows.push({
@@ -84,7 +84,7 @@ export default function CalendarApp() {
             });
           }
         });
-        
+
 
         setEvents(allRows);
         console.log("✅ Učitano događaja:", allRows.length);
@@ -188,7 +188,13 @@ export default function CalendarApp() {
             <p><strong>Opis:</strong> {selectedEvent.opis}</p>
             <p><strong>Kontakt:</strong> {selectedEvent.kontakt}</p>
             <p><strong>Napomena:</strong> {selectedEvent.napomena}</p>
-            <p><strong>Potvrđeno:</strong> {selectedEvent.potvrda}</p>
+            <p>
+              <strong>Potvrđeno:</strong>{" "}
+              <span className={selectedEvent.potvrda?.toLowerCase?.() === "da" ? "text-green-600 font-semibold" : "text-red-600 font-semibold"}>
+                {selectedEvent.potvrda?.toLowerCase?.() === "da" ? "DA" : "NE"}
+              </span>
+            </p>
+
           </div>
         </div>
       )}
