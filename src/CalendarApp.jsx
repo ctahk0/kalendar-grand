@@ -46,7 +46,19 @@ export default function CalendarApp() {
           const potvrda = row.c[5]?.v || "";
 
           const formattedDate = formatDate(datum);
-          if (!formattedDate || !opis) return;
+          if (
+            !formattedDate ||
+            !(
+              klijent.trim() ||
+              opis.trim() ||
+              kontakt.trim() ||
+              napomena.trim() ||
+              potvrda.trim()
+            )
+          ) {
+            return;
+          }
+          
           const isPotvrda = potvrda?.toLowerCase?.() === "da";
 
           allRows.push({
