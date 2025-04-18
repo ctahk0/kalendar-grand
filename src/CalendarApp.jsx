@@ -13,7 +13,7 @@ export default function CalendarApp() {
     { username: import.meta.env.VITE_USER_1, password: import.meta.env.VITE_PASS_1 },
     { username: import.meta.env.VITE_USER_2, password: import.meta.env.VITE_PASS_2 },
   ];
-  
+
   const srLatinLocale = {
     code: "sr-latin",
     week: {
@@ -229,6 +229,7 @@ export default function CalendarApp() {
         height="auto"
         firstDay={1}
         locale={srLatinLocale}
+        locales={[srLatinLocale]}
       />
 
       {selectedEvent && (
