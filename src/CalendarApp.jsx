@@ -142,7 +142,6 @@ export default function CalendarApp() {
           }
         });
 
-
         setEvents(allRows);
         console.log("✅ Učitano događaja:", allRows.length);
       } catch (e) {
