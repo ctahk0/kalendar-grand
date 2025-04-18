@@ -3,6 +3,35 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 
+const srLatinLocale = {
+  code: "sr-latin",
+  week: {
+    dow: 1,
+    doy: 7,
+  },
+  buttonText: {
+    today: "Danas",
+    month: "Mjesec",
+    week: "Nedjelja",
+    day: "Dan",
+    list: "Lista",
+  },
+  weekText: "Sed",
+  allDayText: "Cijeli dan",
+  moreLinkText: (n) => `+ još ${n}`,
+  noEventsText: "Nema događaja za prikaz",
+  dayNames: ["Nedjelja", "Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak", "Subota"],
+  dayNamesShort: ["Ned", "Pon", "Uto", "Sre", "Čet", "Pet", "Sub"],
+  monthNames: [
+    "Januar", "Februar", "Mart", "April", "Maj", "Jun",
+    "Jul", "Avgust", "Septembar", "Oktobar", "Novembar", "Decembar"
+  ],
+  monthNamesShort: [
+    "Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul",
+    "Avg", "Sep", "Okt", "Nov", "Dec"
+  ],
+};
+
 export default function CalendarApp() {
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -13,63 +42,6 @@ export default function CalendarApp() {
     { username: import.meta.env.VITE_USER_1, password: import.meta.env.VITE_PASS_1 },
     { username: import.meta.env.VITE_USER_2, password: import.meta.env.VITE_PASS_2 },
   ];
-
-  const srLatinLocale = {
-    code: "sr-latin",
-    week: {
-      dow: 1, // ponedjeljak kao prvi dan
-      doy: 7,
-    },
-    buttonText: {
-      today: "Danas",
-      month: "Mjesec",
-      week: "Nedjelja",
-      day: "Dan",
-      list: "Lista",
-    },
-    weekText: "Sed",
-    allDayText: "Cijeli dan",
-    moreLinkText: (n) => `+ još ${n}`,
-    noEventsText: "Nema događaja za prikaz",
-    dayNames: [
-      "Nedjelja",
-      "Ponedjeljak",
-      "Utorak",
-      "Srijeda",
-      "Četvrtak",
-      "Petak",
-      "Subota",
-    ],
-    dayNamesShort: ["Ned", "Pon", "Uto", "Sre", "Čet", "Pet", "Sub"],
-    monthNames: [
-      "Januar",
-      "Februar",
-      "Mart",
-      "April",
-      "Maj",
-      "Jun",
-      "Jul",
-      "Avgust",
-      "Septembar",
-      "Oktobar",
-      "Novembar",
-      "Decembar",
-    ],
-    monthNamesShort: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "Maj",
-      "Jun",
-      "Jul",
-      "Avg",
-      "Sep",
-      "Okt",
-      "Nov",
-      "Dec",
-    ],
-  };
 
   useEffect(() => {
     const savedLogin = localStorage.getItem("loggedIn");
@@ -226,9 +198,9 @@ export default function CalendarApp() {
         events={events}
         eventClick={handleEventClick}
         height="auto"
-        firstDay={1}
         locale={srLatinLocale}
         locales={[srLatinLocale]}
+        firstDay={1}
       />
 
       {selectedEvent && (
