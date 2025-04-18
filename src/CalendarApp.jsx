@@ -2,7 +2,63 @@ import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import srLocale from "@fullcalendar/core/locales/sr";
+// import srLocale from "@fullcalendar/core/locales/sr";
+const srLatinLocale = {
+  code: "sr-latin",
+  week: {
+    dow: 1, // ponedjeljak kao prvi dan
+    doy: 7,
+  },
+  buttonText: {
+    today: "Danas",
+    month: "Mjesec",
+    week: "Nedjelja",
+    day: "Dan",
+    list: "Lista",
+  },
+  weekText: "Sed",
+  allDayText: "Cijeli dan",
+  moreLinkText: (n) => `+ još ${n}`,
+  noEventsText: "Nema događaja za prikaz",
+  dayNames: [
+    "Nedjelja",
+    "Ponedjeljak",
+    "Utorak",
+    "Srijeda",
+    "Četvrtak",
+    "Petak",
+    "Subota",
+  ],
+  dayNamesShort: ["Ned", "Pon", "Uto", "Sre", "Čet", "Pet", "Sub"],
+  monthNames: [
+    "Januar",
+    "Februar",
+    "Mart",
+    "April",
+    "Maj",
+    "Jun",
+    "Jul",
+    "Avgust",
+    "Septembar",
+    "Oktobar",
+    "Novembar",
+    "Decembar",
+  ],
+  monthNamesShort: [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "Maj",
+    "Jun",
+    "Jul",
+    "Avg",
+    "Sep",
+    "Okt",
+    "Nov",
+    "Dec",
+  ],
+};
 
 export default function CalendarApp() {
   const [events, setEvents] = useState([]);
@@ -134,7 +190,7 @@ export default function CalendarApp() {
   if (!isLoggedIn) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-4">
-        <h2 className="text-2xl font-bold mb-4">Пријава</h2>
+        <h2 className="text-2xl font-bold mb-4">Prijava</h2>
         <form onSubmit={handleLogin} className="flex flex-col gap-2 w-64">
           <input
             type="text"
@@ -161,8 +217,8 @@ export default function CalendarApp() {
   return (
     <div className="p-4">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-xl font-bold">📅 Календар догађаја</h1>
-        <button onClick={handleLogout} className="text-sm text-red-600 underline">Одјави се</button>
+        <h1 className="text-xl font-bold">📅 Kalendar događaja</h1>
+        <button onClick={handleLogout} className="text-sm text-red-600 underline">Odjavi se</button>
       </div>
 
       <FullCalendar
@@ -172,7 +228,7 @@ export default function CalendarApp() {
         eventClick={handleEventClick}
         height="auto"
         firstDay={1}
-        locale={srLocale}
+        locale={srLatinLocale}
       />
 
       {selectedEvent && (
