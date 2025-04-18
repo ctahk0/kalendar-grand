@@ -134,7 +134,7 @@ export default function CalendarApp() {
   if (!isLoggedIn) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-4">
-        <h2 className="text-2xl font-bold mb-4">Prijava</h2>
+        <h2 className="text-2xl font-bold mb-4">Пријава</h2>
         <form onSubmit={handleLogin} className="flex flex-col gap-2 w-64">
           <input
             type="text"
@@ -161,8 +161,8 @@ export default function CalendarApp() {
   return (
     <div className="p-4">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-xl font-bold">📅 Kalendar događaja</h1>
-        <button onClick={handleLogout} className="text-sm text-red-600 underline">Odjavi se</button>
+        <h1 className="text-xl font-bold">📅 Календар догађаја</h1>
+        <button onClick={handleLogout} className="text-sm text-red-600 underline">Одјави се</button>
       </div>
 
       <FullCalendar
