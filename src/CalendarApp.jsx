@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
+import srLocale from "@fullcalendar/core/locales/sr";
 
 export default function CalendarApp() {
   const [events, setEvents] = useState([]);
@@ -171,6 +172,7 @@ export default function CalendarApp() {
         eventClick={handleEventClick}
         height="auto"
         firstDay={1}
+        locale={srLocale}
       />
 
       {selectedEvent && (
