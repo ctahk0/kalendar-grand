@@ -12,7 +12,7 @@ const srLatinLocale = {
   buttonText: {
     today: "Danas",
     month: "Mjesec",
-    week: "Nedjelja",
+    week: "Sedmica",
     day: "Dan",
     list: "Lista",
   },
@@ -20,17 +20,8 @@ const srLatinLocale = {
   allDayText: "Cijeli dan",
   moreLinkText: (n) => `+ još ${n}`,
   noEventsText: "Nema događaja za prikaz",
-  dayNames: ["Nedjelja", "Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak", "Subota"],
-  dayNamesShort: ["Ned", "Pon", "Uto", "Sre", "Čet", "Pet", "Sub"],
-  monthNames: [
-    "Januar", "Februar", "Mart", "April", "Maj", "Jun",
-    "Jul", "Avgust", "Septembar", "Oktobar", "Novembar", "Decembar"
-  ],
-  monthNamesShort: [
-    "Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul",
-    "Avg", "Sep", "Okt", "Nov", "Dec"
-  ],
 };
+
 
 export default function CalendarApp() {
   const [events, setEvents] = useState([]);
